@@ -1,4 +1,5 @@
 const inquirer =  require('inquirer');
+const ContactController = require('./ContactController');
 
 module.exports = class MenuController{
   constructor(){
@@ -10,7 +11,7 @@ module.exports = class MenuController{
         choices: ['Add new contact', 'Get current date and time', 'Exit']
       }
     ];
-    this.contacts = [];
+    this.book = new ContactController();
     this.getDate = function(){
       let currentDate = new Date();
       console.log(currentDate.toString());
@@ -41,8 +42,15 @@ module.exports = class MenuController{
 
   addContact(){
     this.clear();
-    console.log('addContact called');
-    this.main();
+    inquirer.prompt(this.book.addContactQuestions).then((answers) =>{
+      this.book.addContact(answers.name, answers.phone).then((contact) => {
+        console.log('contact added successfully!');
+        this.main();
+      }).catch((err) =>{
+        console.log(err);
+        this.main();
+      });
+    });
   }
 
   exit(){
@@ -50,7 +58,7 @@ module.exports = class MenuController{
     process.exit();
   }
 
-  getContactCount(){
-    return this.contacts.length;
+  remindMe(){
+    return 'Learning is a life-long pursuit.';
   }
 }
