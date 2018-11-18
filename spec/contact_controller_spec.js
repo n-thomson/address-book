@@ -9,11 +9,11 @@ describe("ContactController", () => {
     })
     .catch((err) => {
       done();
-    })
-  })
+    });
+  });
 
-  describe('#addContact()', (done) => {
-    it('should add a single contact into the book', () =>{
+  describe('#addContact()', () => {
+    it('should add a single contact into the book', (done) =>{
       this.book.addContact('Alice', '001-101-1010')
       .then((contact) => {
         expect(contact.name).toBe('Alice');
