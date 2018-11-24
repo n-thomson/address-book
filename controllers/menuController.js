@@ -135,8 +135,7 @@ module.exports = class MenuController{
       }
       else{
         console.log('contact not deleted');
-        this.clear();
-        this.showContact();
+        this.showContact(contact);
       }
     })
     .catch((err) => {
